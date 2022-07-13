@@ -1,6 +1,6 @@
-1.Open terminal
+1.Open terminal in project directory
 2.docker pull mysql
 3.docker run --name package-sql -e MYSQL_ROOT_PASSWORD=12345 -d -p 3306:3306
-4.java -jar backendlab2.jar
-
+4.mvn package
+5.java -jar target/app-0.0.1-SNAPSHOT.jar
 5.Create database from file database.txt in MySQL Workbench. Db password: 12345
