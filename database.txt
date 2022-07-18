@@ -1,0 +1,121 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema mydb2
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb2
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb2` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `mydb2` ;
+
+-- -----------------------------------------------------
+-- Table `mydb2`.`brand`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb2`.`brand` ;
+
+CREATE TABLE IF NOT EXISTS `mydb2`.`brand` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `UK_rdxh7tq2xs66r485cc8dkxt77` (`name` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mydb2`.`category`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb2`.`category` ;
+
+CREATE TABLE IF NOT EXISTS `mydb2`.`category` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `brand_id` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `UK_46ccwnsi9409t36lurvtyljak` (`name` ASC) VISIBLE,
+  INDEX `FK57gpi2dtsm4euf8w2rpi7odge` (`brand_id` ASC) VISIBLE,
+  CONSTRAINT `FK57gpi2dtsm4euf8w2rpi7odge`
+    FOREIGN KEY (`brand_id`)
+    REFERENCES `mydb2`.`brand` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mydb2`.`product`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb2`.`product` ;
+
+CREATE TABLE IF NOT EXISTS `mydb2`.`product` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(128) NOT NULL,
+  `price` FLOAT NOT NULL,
+  `category_id` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `UK_jmivyxk9rmgysrmsqw15lqr5b` (`name` ASC) VISIBLE,
+  INDEX `FK1mtsbur82frn64de7balymq9s` (`category_id` ASC) VISIBLE,
+  CONSTRAINT `FK1mtsbur82frn64de7balymq9s`
+    FOREIGN KEY (`category_id`)
+    REFERENCES `mydb2`.`category` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mydb2`.`product_details`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb2`.`product_details` ;
+
+CREATE TABLE IF NOT EXISTS `mydb2`.`product_details` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `value` VARCHAR(45) NOT NULL,
+  `product_id` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `FKrhahp4f26x99lqf0kybcs79rb` (`product_id` ASC) VISIBLE,
+  CONSTRAINT `FKrhahp4f26x99lqf0kybcs79rb`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `mydb2`.`product` (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `mydb2`.`users`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb2`.`users` ;
+
+CREATE TABLE IF NOT EXISTS `mydb2`.`users` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(45) NOT NULL,
+  `first_name` VARCHAR(20) NOT NULL,
+  `last_name` VARCHAR(20) NOT NULL,
+  `password` VARCHAR(64) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `UK_6dotkott2kjsp8vw4d0m25fb7` (`email` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
